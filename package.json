@@ -1,0 +1,15 @@
+{
+  "name": "neeo-jvc-dlax-rs-ip",
+  "version": "0.0.1",
+  "description": "NEEO Driver for JVC DLA-X and RS Projectors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jvc-projector": "git+https://github.com/mbalders/jvc-projector.git",
+    "winston": "^2.4.2"
+  }
+}
