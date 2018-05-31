@@ -11,7 +11,7 @@ Very minimal at this point, only added what was necessary for my setup.
 
 ## Command codes
 * Sourced from [here](http://pro.jvc.com/pro/attributes/PRESENT/manual/MK8_Ext_spec_v1_0%20English_Final.pdf)
-* Uses a [fork](https://github.com/mbalders/jvc-projector) to control projector [original](https://github.com/djMax/jvc-projector)
+* Uses a [fork](https://github.com/mbalders/jvc-projector) of code to interface projector [original](https://github.com/djMax/jvc-projector)
 
 ## TODO:
 * Add more codes
