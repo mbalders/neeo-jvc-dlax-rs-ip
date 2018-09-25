@@ -21,7 +21,7 @@ const JVC_PORT = 20554;
 var code;
 var jj = new JVC(winston, JVC_IP, JVC_PORT)
   .on("ready", function(){
-    winston.info("ready", key);
+    winston.info("Ready", code);
     
 
     switch (code){
@@ -51,11 +51,31 @@ var jj = new JVC(winston, JVC_IP, JVC_PORT)
 
 
   })
+  .on("ack", function(foo, foo2){
+    winston.info("ack", foo, foo2);
+    
+    // when job is complete
+    jj.disconnect();
+
+    winston.info('wtf');
+  })
+  .on("unknown", function(foo, foo2){
+    winston.info("unknown", foo, foo2);
+    
+    // when job is complete
+    //jj.disconnect();
+  })
+  .on("connected", function(foo, foo2){
+    winston.info("Connected");
+    
+    // when job is complete
+    //jj.disconnect();
+  })
   .on("response", function(foo, foo2){
     winston.info("response", foo, foo2);
     
     // when job is complete
-    //jj.disconnect();
+    jj.disconnect();
   });
 
 const controller = {
@@ -66,30 +86,52 @@ const controller = {
 
     //do we need to connect everytime?
     //is there a way restart?
-    jj.connect();
+    //jj.connect();
 
     //if not, should we disconnect?
     //test to see what responses are both ways
 
-    /*switch (name){
-      case "POWER ON":
-        key = true;
-        break;
-      case "POWER OFF":
-        key = false;
-        break;
-    }
-
     jj = new JVC(winston, JVC_IP, JVC_PORT)
       .on("ready", function(){
-        winston.info("ready", key);
-        jj.setPowerState(key);
+        winston.info("Ready", code);
+        
+        switch (code){
+          case "POWER ON":
+            jj.setPowerState(true);
+            break;
+          case "POWER OFF":
+            jj.setPowerState(false);
+            break;
+          case "INPUT HDMI 1":
+            jj.setInputState(true);
+            break;
+          case "INPUT HDMI 2":
+            jj.setInputState(false);
+            break;
+          case "LOW LATENCY ON":
+            jj.sendCommand([0x21, 0x89, 0x01, 0x50, 0x4D, 0x4C, 0x4C, 0x31, 0x0A]);
+            break;
+          case "LOW LATENCY OFF":
+            jj.sendCommand([0x21, 0x89, 0x01, 0x50, 0x4D, 0x4C, 0x4C, 0x30, 0x0A]);
+            break;
+    
+          //operation vs reference, PJ fixed, id fixed, P (picture), M (adjust), L (low), L (latencty), off : on, end
+          //0x21, 0x89, 0x01, 0x50, 0x4D, 0x4C, 0x4C, 0x30 : 0x31, 0x0A
+        }
+
+
+      })
+      .on("ack", function(foo, foo2){
+        winston.info("ack", foo, foo2);
+        // when job is complete
+        //this does not seem to work...
+        jj.disconnect();
       })
       .on("response", function(foo, foo2){
         winston.info("response", foo, foo2);
       });
 
-    jj.connect();*/    
+    jj.connect();   
   }
 };
 
